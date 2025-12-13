@@ -1,6 +1,11 @@
 import { getIngredientsApi } from '@api';
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { TIngredient } from '@utils-types';
+import {
+  createAsyncThunk,
+  createSlice,
+  nanoid,
+  PayloadAction
+} from '@reduxjs/toolkit';
+import { TConstructorIngredient, TIngredient } from '@utils-types';
 
 export const getIngredients = createAsyncThunk('ingredients/getAll', async () =>
   getIngredientsApi()
@@ -12,7 +17,7 @@ interface IngredientsState {
   error: string | null;
 }
 
-const initialState: IngredientsState = {
+const ingredientsInitialState: IngredientsState = {
   ingredients: [],
   isIngredientsLoading: false,
   error: null
@@ -20,7 +25,7 @@ const initialState: IngredientsState = {
 
 export const ingredientsSlice = createSlice({
   name: 'allIngredients',
-  initialState,
+  initialState: ingredientsInitialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
@@ -40,4 +45,33 @@ export const ingredientsSlice = createSlice({
   }
 });
 
+type TConstructorState = {
+  items: Array<TConstructorIngredient>;
+};
+
+const constructorInitialState: TConstructorState = {
+  items: []
+};
+
+export const constructorSlice = createSlice({
+  name: 'constructorIngredients',
+  initialState: constructorInitialState,
+  reducers: {
+    addIngredient: {
+      reducer: (state, action: PayloadAction<TConstructorIngredient>) => {
+        state.items.push(action.payload);
+      },
+      prepare: (ingredient: TIngredient) => {
+        const id = nanoid();
+        return { payload: { ...ingredient, id } };
+      }
+    },
+    removeIngredient: (state, action) => {
+      state.items = state.items.filter((item) => item.id !== action.payload);
+    }
+  }
+});
+
 export const ingredientsReducer = ingredientsSlice.reducer;
+export const constructorReducer = constructorSlice.reducer;
+export const { addIngredient, removeIngredient } = constructorSlice.actions;
