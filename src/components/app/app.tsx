@@ -6,10 +6,9 @@ import { AppHeader } from '@components';
 import { Route, Routes } from 'react-router-dom';
 
 import { useEffect } from 'react';
-import { getIngredients } from '@slices';
+import { getIngredients } from '../../services/slices/ingredientSlice';
 import { Preloader } from '@ui';
 import { useDispatch, useSelector } from '@store';
-// import { useDispatch, useSelector } from '../../services/store';
 
 const App = () => {
   const dispatch = useDispatch();
