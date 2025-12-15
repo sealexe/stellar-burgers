@@ -2,7 +2,7 @@ import { ConstructorPage } from '@pages';
 import '../../index.css';
 import styles from './app.module.css';
 
-import { AppHeader } from '@components';
+import { AppHeader, IngredientDetails, Modal } from '@components';
 import { Route, Routes } from 'react-router-dom';
 
 import { useEffect } from 'react';
@@ -12,7 +12,9 @@ import { useDispatch, useSelector } from '@store';
 
 const App = () => {
   const dispatch = useDispatch();
-  const { isIngredientsLoading } = useSelector((state) => state.ingredients);
+  const { isIngredientsLoading } = useSelector(
+    (state) => state.ingredientsList
+  );
 
   useEffect(() => {
     dispatch(getIngredients());
@@ -27,6 +29,7 @@ const App = () => {
         ) : (
           <Routes>
             <Route path='/' element={<ConstructorPage />} />
+            <Route path='/ingredients/:id' element={<IngredientDetails />} />
           </Routes>
         )}
       </div>
@@ -36,7 +39,7 @@ const App = () => {
 
 export default App;
 
-// const App = () => {
+// {/* const App = () => {
 //   const dispatch = useDispatch();
 
 //   useEffect(() => {
@@ -51,4 +54,4 @@ export default App;
 //       </Routes>
 //     </div>
 //   );
-// };
+// }; */}

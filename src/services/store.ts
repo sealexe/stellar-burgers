@@ -9,7 +9,7 @@ import { ingredientsReducer } from './slices/ingredientSlice';
 import { constructorReducer } from './slices/constructorSlice';
 
 const rootReducer = combineReducers({
-  ingredients: ingredientsReducer,
+  ingredientsList: ingredientsReducer,
   constructorItems: constructorReducer
 });
 
