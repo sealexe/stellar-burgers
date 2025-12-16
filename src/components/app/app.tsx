@@ -3,7 +3,7 @@ import '../../index.css';
 import styles from './app.module.css';
 
 import { AppHeader, IngredientDetails, Modal } from '@components';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 
 import { useEffect } from 'react';
 import { getIngredients } from '../../services/slices/ingredientSlice';
@@ -16,6 +16,14 @@ const App = () => {
     (state) => state.ingredientsList
   );
 
+  const navigate = useNavigate();
+  const onClose = () => {
+    navigate(-1);
+  };
+
+  const location = useLocation();
+  const backgroundLocation = location.state?.background;
+
   useEffect(() => {
     dispatch(getIngredients());
   }, [dispatch]);
@@ -27,10 +35,22 @@ const App = () => {
         {isIngredientsLoading ? (
           <Preloader />
         ) : (
-          <Routes>
-            <Route path='/' element={<ConstructorPage />} />
-            <Route path='/ingredients/:id' element={<IngredientDetails />} />
-          </Routes>
+          <>
+            <Routes location={backgroundLocation || location}>
+              <Route path='/' element={<ConstructorPage />} />
+              <Route path='/ingredients/:id' element={<IngredientDetails />} />
+            </Routes>
+            <Routes>
+              <Route
+                path='/ingredients/:id'
+                element={
+                  <Modal title='Информация об ингредиенте' onClose={onClose}>
+                    <IngredientDetails />
+                  </Modal>
+                }
+              />
+            </Routes>
+          </>
         )}
       </div>
     </>
