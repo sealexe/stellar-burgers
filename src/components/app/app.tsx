@@ -1,20 +1,21 @@
-import { ConstructorPage } from '@pages';
+import { ConstructorPage, Feed } from '@pages';
 import '../../index.css';
 import styles from './app.module.css';
 
-import { AppHeader, IngredientDetails, Modal } from '@components';
+import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 
 import { useEffect } from 'react';
-import { getIngredients } from '../../services/slices/ingredientSlice';
+import {
+  getIngredients,
+  getIngredientsLoading
+} from '../../services/slices/ingredientSlice';
 import { Preloader } from '@ui';
 import { useDispatch, useSelector } from '@store';
 
 const App = () => {
   const dispatch = useDispatch();
-  const { isIngredientsLoading } = useSelector(
-    (state) => state.ingredientsList
-  );
+  const isIngredientsLoading = useSelector(getIngredientsLoading);
 
   const navigate = useNavigate();
   const onClose = () => {
@@ -22,11 +23,13 @@ const App = () => {
   };
 
   const location = useLocation();
+  const orderId = location.pathname.split('/').pop();
+
   const backgroundLocation = location.state?.background;
 
   useEffect(() => {
     dispatch(getIngredients());
-  }, [dispatch]);
+  }, []);
 
   return (
     <>
@@ -39,17 +42,29 @@ const App = () => {
             <Routes location={backgroundLocation || location}>
               <Route path='/' element={<ConstructorPage />} />
               <Route path='/ingredients/:id' element={<IngredientDetails />} />
+              <Route path='/feed' element={<Feed />} />
+              <Route path='/feed/:number' element={<OrderInfo />} />
             </Routes>
-            <Routes>
-              <Route
-                path='/ingredients/:id'
-                element={
-                  <Modal title='Информация об ингредиенте' onClose={onClose}>
-                    <IngredientDetails />
-                  </Modal>
-                }
-              />
-            </Routes>
+            {backgroundLocation && (
+              <Routes>
+                <Route
+                  path='/ingredients/:id'
+                  element={
+                    <Modal title='Детали ингредиента' onClose={onClose}>
+                      <IngredientDetails />
+                    </Modal>
+                  }
+                />
+                <Route
+                  path='/feed/:number'
+                  element={
+                    <Modal title={`#${orderId}`} onClose={onClose}>
+                      <OrderInfo />
+                    </Modal>
+                  }
+                />
+              </Routes>
+            )}
           </>
         )}
       </div>

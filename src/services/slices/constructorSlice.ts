@@ -60,10 +60,13 @@ export const constructorSlice = createSlice({
         0,
         state.ingredients.splice(action.payload.index, 1)[0]
       );
-      console.log(action.payload.index);
     });
+  },
+  selectors: {
+    getConstructorIngredients: (state) => state.ingredients,
+    getBun: (state) => state.bun
   }
 });
 
-export const constructorReducer = constructorSlice.reducer;
 export const { addIngredient, removeIngredient } = constructorSlice.actions;
+export const { getConstructorIngredients, getBun } = constructorSlice.selectors;
