@@ -21,8 +21,3 @@ export const checkUserAuth = createAsyncThunk(
     }
   }
 );
-
-// export const getUser = async () => {
-//   const res = await getUserApi();
-//   return res.user;
-// };

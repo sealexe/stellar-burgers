@@ -36,6 +36,7 @@ const App = () => {
 
   const location = useLocation();
   const orderId = location.pathname.split('/').pop();
+  const orderNumber = location.pathname.split('/').pop();
 
   const backgroundLocation = location.state?.background;
 
@@ -75,17 +76,21 @@ const App = () => {
                   <ProtectedRoute onlyUnAuth component={<ForgotPassword />} />
                 }
               />
-              {/* <Route
+              <Route
                 path='/profile/orders'
                 element={<ProtectedRoute component={<ProfileOrders />} />}
-              /> */}
+              />
+              <Route
+                path='/profile/orders/:number'
+                element={<ProtectedRoute component={<OrderInfo />} />}
+              />
               <Route
                 path='/reset-password'
                 element={
                   <ProtectedRoute onlyUnAuth component={<ResetPassword />} />
                 }
               />
-              {/* <Route path='*' element={<NotFound404 />} /> */}
+              <Route path='*' element={<NotFound404 />} />
             </Routes>
             {backgroundLocation && (
               <Routes>
@@ -105,6 +110,14 @@ const App = () => {
                     </Modal>
                   }
                 />
+                <Route
+                  path='/profile/orders/:number'
+                  element={
+                    <Modal title={`#${orderNumber}`} onClose={onClose}>
+                      <ProtectedRoute component={<OrderInfo />} />
+                    </Modal>
+                  }
+                />
               </Routes>
             )}
           </>
@@ -115,20 +128,3 @@ const App = () => {
 };
 
 export default App;
-
-// {/* const App = () => {
-//   const dispatch = useDispatch();
-
-//   useEffect(() => {
-//     dispatch(getIngredients());
-//   }, []);
-
-//   return (
-//     <div className={styles.app}>
-//       <AppHeader />
-//       <Routes>
-//         <Route path='/' element={<ConstructorPage />} />
-//       </Routes>
-//     </div>
-//   );
-// }; */}

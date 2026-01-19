@@ -10,13 +10,15 @@ import { constructorSlice } from './slices/constructorSlice';
 import { feedsSlice } from './slices/feedSlice';
 import { orderInfoSlice } from './slices/orderInfoSlice';
 import { userSlice } from './slices/userSlice';
+import { profileOrdersSlice } from './slices/profileOrdersSlice';
 
 const rootReducer = combineSlices(
   constructorSlice,
   ingredientsSlice,
   feedsSlice,
   orderInfoSlice,
-  userSlice
+  userSlice,
+  profileOrdersSlice
 );
 
 // const rootReducer = () => {
