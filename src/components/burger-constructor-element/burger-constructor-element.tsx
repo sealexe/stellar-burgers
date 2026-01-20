@@ -20,7 +20,7 @@ export const BurgerConstructorElement: FC<BurgerConstructorElementProps> = memo(
     };
 
     const handleClose = () => {
-      dispatch(removeIngredient(ingredient.id));
+      dispatch(removeIngredient(ingredient));
     };
 
     return (
@@ -35,25 +35,3 @@ export const BurgerConstructorElement: FC<BurgerConstructorElementProps> = memo(
     );
   }
 );
-
-// export const BurgerConstructorElement: FC<BurgerConstructorElementProps> = memo(
-//   ({ ingredient, index, totalItems }) => {
-//     const handleMoveDown = () => {};
-
-//     const handleMoveUp = () => {};
-
-//     const handleClose = () => {
-//     };
-
-//     return (
-//       <BurgerConstructorElementUI
-//         ingredient={ingredient}
-//         index={index}
-//         totalItems={totalItems}
-//         handleMoveUp={handleMoveUp}
-//         handleMoveDown={handleMoveDown}
-//         handleClose={handleClose}
-//       />
-//     );
-//   }
-// );

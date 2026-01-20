@@ -1,5 +1,5 @@
 import { useSelector } from '@store';
-import { getIsAuthChecked, getUserData } from '../services/slices/userSlice';
+import { getIsAuthChecked, getUserData } from '../../services/slices/userSlice';
 import { Navigate, useLocation } from 'react-router-dom';
 import { Preloader } from '@ui';
 

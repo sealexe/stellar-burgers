@@ -23,7 +23,8 @@ import {
 import { Preloader } from '@ui';
 import { useDispatch, useSelector } from '@store';
 import { checkUserAuth } from '../../services/actions';
-import { ProtectedRoute } from '../protected-route';
+import { ProtectedRoute } from '../protected-route/protected-route';
+import { SinglePage } from '../ui/pages/single-page';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -55,7 +56,10 @@ const App = () => {
           <>
             <Routes location={backgroundLocation || location}>
               <Route path='/' element={<ConstructorPage />} />
-              <Route path='/ingredients/:id' element={<IngredientDetails />} />
+              <Route
+                path='/ingredients/:id'
+                element={<SinglePage component={<IngredientDetails />} />}
+              />
               <Route path='/feed' element={<Feed />} />
               <Route path='/feed/:number' element={<OrderInfo />} />
               <Route

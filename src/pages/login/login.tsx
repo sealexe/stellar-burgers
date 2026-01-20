@@ -15,9 +15,9 @@ export const Login: FC = () => {
   const dispatch = useDispatch();
   const error = useSelector(getError) as string;
 
-  useEffect(() => {
-    dispatch(clearError());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(clearError());
+  // }, []);
 
   const loginData: TLoginData = {
     email,

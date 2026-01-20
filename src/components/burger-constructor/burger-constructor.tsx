@@ -6,7 +6,6 @@ import {
   clearConstructor,
   getBun,
   getConstructorIngredients,
-  getOrder,
   getOrderModalData,
   getOrderRequest,
   postOrder
@@ -19,7 +18,6 @@ export const BurgerConstructor: FC = () => {
   const dispatch = useDispatch();
   const ingredients = useSelector(getConstructorIngredients);
   const bun = useSelector(getBun);
-  const orderData = useSelector(getOrder);
   const constructorItems = { bun, ingredients };
   const user = useSelector(getUserData);
   const navigate = useNavigate();
@@ -33,20 +31,15 @@ export const BurgerConstructor: FC = () => {
       navigate('/login');
       return;
     }
-    dispatch(postOrder(orderData));
+    if (bun) {
+      const orderData = [
+        bun._id,
+        ...ingredients.map((item) => item._id),
+        bun._id
+      ];
+      dispatch(postOrder(orderData));
+    }
   };
-  // const onOrderClick = () => {
-  //   if (!constructorItems.bun || orderRequest) return;
-  //   if (!user) {
-  //     navigate('/login', {
-  //       state: {
-  //         from: location.pathname
-  //       }
-  //     });
-  //     return;
-  //   }
-  //   dispatch(postOrder(orderData));
-  // };
 
   const closeOrderModal = () => {
     dispatch(clearConstructor());
@@ -73,45 +66,3 @@ export const BurgerConstructor: FC = () => {
     />
   );
 };
-
-// export const BurgerConstructor: FC = () => {
-//   /** TODO: взять переменные constructorItems, orderRequest и orderModalData из стора */
-//   const constructorItems = {
-//     bun: {
-//       price: 0
-//     },
-//     ingredients: []
-//   };
-
-//   const orderRequest = false;
-
-//   const orderModalData = null;
-
-//   const onOrderClick = () => {
-//     if (!constructorItems.bun || orderRequest) return;
-//   };
-//   const closeOrderModal = () => {};
-
-//   const price = useMemo(
-//     () =>
-//       (constructorItems.bun ? constructorItems.bun.price * 2 : 0) +
-//       constructorItems.ingredients.reduce(
-//         (s: number, v: TConstructorIngredient) => s + v.price,
-//         0
-//       ),
-//     [constructorItems]
-//   );
-
-//   return null;
-
-//   return (
-//     <BurgerConstructorUI
-//       price={price}
-//       orderRequest={orderRequest}
-//       constructorItems={constructorItems}
-//       orderModalData={orderModalData}
-//       onOrderClick={onOrderClick}
-//       closeOrderModal={closeOrderModal}
-//     />
-//   );
-// };

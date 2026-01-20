@@ -8,20 +8,18 @@ import {
 } from '@reduxjs/toolkit';
 import { TConstructorIngredient, TIngredient, TOrder } from '@utils-types';
 
-type TConstructorState = {
+interface ConstructorState {
   ingredients: Array<TConstructorIngredient>;
   bun: TIngredient | null;
-  order: string[];
   orderRequest: boolean;
   orderModalData: TOrder | null;
   error: string | null;
   ingredientCounter: number;
-};
+}
 
-const constructorInitialState: TConstructorState = {
+const constructorInitialState: ConstructorState = {
   ingredients: [],
   bun: null,
-  order: [],
   orderRequest: false,
   orderModalData: null,
   error: null,
@@ -55,8 +53,6 @@ export const constructorSlice = createSlice({
         } else {
           state.ingredients.push(action.payload);
         }
-        state.order.push(action.payload._id);
-        console.log(action.payload);
       },
       prepare: (ingredient: TIngredient) => {
         const id = ingredient.type !== 'bun' ? nanoid() : undefined;
@@ -65,7 +61,7 @@ export const constructorSlice = createSlice({
     },
     removeIngredient: (state, action) => {
       state.ingredients = state.ingredients.filter(
-        (item) => item.id !== action.payload
+        (item) => item.id !== action.payload.id
       );
     },
     clearConstructor: (state) => {
@@ -110,8 +106,7 @@ export const constructorSlice = createSlice({
     getConstructorIngredients: (state) => state.ingredients,
     getBun: (state) => state.bun,
     getOrderRequest: (state) => state.orderRequest,
-    getOrderModalData: (state) => state.orderModalData,
-    getOrder: (state) => state.order
+    getOrderModalData: (state) => state.orderModalData
   }
 });
 
@@ -120,7 +115,6 @@ export const { addIngredient, removeIngredient, clearConstructor } =
 export const {
   getConstructorIngredients,
   getBun,
-  getOrder,
   getOrderModalData,
   getOrderRequest
 } = constructorSlice.selectors;
