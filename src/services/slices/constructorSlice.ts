@@ -14,7 +14,6 @@ interface ConstructorState {
   orderRequest: boolean;
   orderModalData: TOrder | null;
   error: string | null;
-  ingredientCounter: number;
 }
 
 const constructorInitialState: ConstructorState = {
@@ -22,8 +21,7 @@ const constructorInitialState: ConstructorState = {
   bun: null,
   orderRequest: false,
   orderModalData: null,
-  error: null,
-  ingredientCounter: 0
+  error: null
 };
 
 type TMoveParam = {
@@ -64,9 +62,7 @@ export const constructorSlice = createSlice({
         (item) => item.id !== action.payload.id
       );
     },
-    clearConstructor: (state) => {
-      state.ingredients = [];
-      state.bun = null;
+    clearModalData: (state) => {
       state.orderModalData = null;
     }
   },
@@ -88,6 +84,8 @@ export const constructorSlice = createSlice({
     builder.addCase(postOrder.fulfilled, (state, action) => {
       state.orderModalData = action.payload.order;
       state.orderRequest = false;
+      state.bun = null;
+      state.ingredients = [];
       state.error = null;
     });
     builder.addCase(postOrder.pending, (state) => {
@@ -110,7 +108,7 @@ export const constructorSlice = createSlice({
   }
 });
 
-export const { addIngredient, removeIngredient, clearConstructor } =
+export const { addIngredient, removeIngredient, clearModalData } =
   constructorSlice.actions;
 export const {
   getConstructorIngredients,
