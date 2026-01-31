@@ -1,0 +1,17 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "types": ["cypress", "node"]
+  },
+  "include": [
+    "../node_modules/cypress",
+    "./**/*.ts",
+    "./**/*.tsx",
+    "../cypress/**/*.ts"
+  ],
+  "exclude": [
+    "../node_modules",
+    "../src"  // если есть конфликт с основным проектом
+  ]
+}
