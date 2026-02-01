@@ -13,7 +13,7 @@ interface ProfileOrdersState {
   error: string | null;
 }
 
-const profileOrdersInitialState: ProfileOrdersState = {
+export const profileOrdersInitialState: ProfileOrdersState = {
   profileOrders: [],
   isProfileOrdersLoading: false,
   error: null

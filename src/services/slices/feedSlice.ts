@@ -18,7 +18,7 @@ interface FeedsState {
   error: string | null;
 }
 
-const feedsInitialState: FeedsState = {
+export const feedsInitialState: FeedsState = {
   orders: [],
   ordersAmount: {
     total: null,

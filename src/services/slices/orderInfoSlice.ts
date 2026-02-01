@@ -13,7 +13,7 @@ interface OrderInfoState {
   error: string | null;
 }
 
-const orderInfoInitialState: OrderInfoState = {
+export const orderInfoInitialState: OrderInfoState = {
   order: {
     createdAt: '',
     ingredients: [],
