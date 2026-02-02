@@ -47,3 +47,4 @@ export const ingredientsSlice = createSlice({
 
 export const { getAllIngredients, getIngredientsLoading, getImgredientsError } =
   ingredientsSlice.selectors;
+export default ingredientsSlice.reducer;

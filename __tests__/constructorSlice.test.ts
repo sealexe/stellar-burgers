@@ -1,9 +1,12 @@
 import { nanoid } from '@reduxjs/toolkit';
-import {
+import constructorSliceReducer, {
   addIngredient,
+  clearModalData,
+  constructorInitialState,
   constructorSlice,
   moveDown,
   moveUp,
+  postOrder,
   removeIngredient
 } from '../src/services/slices/constructorSlice';
 
@@ -374,5 +377,49 @@ describe('тесты синхронных экшенов constructorSlice', () =
       orderModalData: null,
       error: null
     });
+  });
+  test('очистка данных модального окна', () => {
+    const state = {
+      ...constructorInitialState,
+      orderRequest: true,
+      orderModalData: { number: 123456 }
+    };
+    const newState = constructorSliceReducer(state, clearModalData());
+
+    expect(newState.orderModalData).toBeNull();
+  });
+});
+
+describe('тесты асинхронных экшенов', () => {
+  test('тест postOrder.pending', () => {
+    const state = constructorSliceReducer(constructorInitialState, {
+      type: postOrder.pending.type
+    });
+
+    expect(state.orderRequest).toBe(true);
+    expect(state.error).toBeNull();
+    expect(state.orderModalData).toBeNull();
+  });
+
+  test('postOrder.fulfilled', () => {
+    const mockOrder = { number: 100500 };
+    const state = constructorSliceReducer(constructorInitialState, {
+      type: postOrder.fulfilled.type,
+      payload: { order: mockOrder }
+    });
+
+    expect(state.orderRequest).toBe(false);
+    expect(state.orderModalData).toEqual(mockOrder);
+    expect(state.error).toBeNull();
+  });
+
+  test('postOrder.rejected', () => {
+    const state = constructorSliceReducer(constructorInitialState, {
+      type: postOrder.rejected.type,
+      error: { message: 'Произошла ошибка оформления заказа' }
+    });
+
+    expect(state.orderRequest).toBe(false);
+    expect(state.error).toBe('Произошла ошибка оформления заказа');
   });
 });

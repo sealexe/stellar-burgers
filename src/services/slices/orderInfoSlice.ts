@@ -59,3 +59,5 @@ export const {
   getIsOrderInfoLoading,
   getOrderInfoError
 } = orderInfoSlice.selectors;
+
+export default orderInfoSlice.reducer;

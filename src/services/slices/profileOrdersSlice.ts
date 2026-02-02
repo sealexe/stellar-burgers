@@ -29,7 +29,6 @@ export const profileOrdersSlice = createSlice({
         state.profileOrders = action.payload;
         state.isProfileOrdersLoading = false;
         state.error = null;
-        console.log(action.payload);
       })
       .addCase(getProfileOrders.pending, (state, action) => {
         state.isProfileOrdersLoading = true;
@@ -54,3 +53,5 @@ export const {
   getIsProfileOrdersLoading,
   getOrdersError
 } = profileOrdersSlice.selectors;
+
+export default profileOrdersSlice.reducer;

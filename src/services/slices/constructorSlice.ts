@@ -116,3 +116,5 @@ export const {
   getOrderModalData,
   getOrderRequest
 } = constructorSlice.selectors;
+
+export default constructorSlice.reducer;
