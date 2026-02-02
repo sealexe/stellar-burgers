@@ -1,3 +1,5 @@
+import { INGREDIENT_IDS, SELECTORS } from 'cypress/constants/selectors';
+
 describe('проверка страницы конструктора бургера', function () {
   beforeEach(() => {
     //получаем ингредиенты
@@ -14,21 +16,21 @@ describe('проверка страницы конструктора бурге�
   });
   it('добавление ингредиента в список конструктора', function () {
     //кликаем на ингредиент
-    cy.get('[data-cy=ingredient-card][data-id="643d69a5c3f7b9001cfa093e"]')
+    cy.get(`${SELECTORS.ingredientCard}[data-id="${INGREDIENT_IDS.filling}"]`)
       .contains('button', 'Добавить')
       .click();
     //проверяем изменение счетчика ингредиента
-    cy.get('[data-cy=ingredient-card][data-id="643d69a5c3f7b9001cfa093e"]')
+    cy.get(`${SELECTORS.ingredientCard}[data-id="${INGREDIENT_IDS.filling}"]`)
       .get('.cy-inredient-counter')
       .should('have.text', '1');
     //проверяем наличие ингредиента в консрукторе
-    cy.get('[data-cy=burger-constructor]').should(
+    cy.get(SELECTORS.burgerConstructor).should(
       'contain',
       'Филе Люминесцентного тетраодонтимформа'
     );
     //проверяем изменение стоимости заказа
-    cy.get('[data-cy=burger-constructor]')
-      .get('[data-cy=total-price]')
+    cy.get(SELECTORS.burgerConstructor)
+      .get(SELECTORS.totalPrice)
       .should('have.text', '988');
   });
 });
@@ -50,13 +52,13 @@ describe('проверка работы модальных окон', function (
   it('открытие модального окна ингредиента', function () {
     //кликаем по ингредиенту
     cy.get(
-      '[data-cy=ingredient-link][data-id="643d69a5c3f7b9001cfa093e"]'
+      `${SELECTORS.ingredientLink}[data-id="${INGREDIENT_IDS.filling}"]`
     ).click();
     //проверяем наличие оверлея
-    cy.get('[data-cy=overlay]').should('exist');
+    cy.get(SELECTORS.overlay).should('exist');
     //проверяем наличие модального окна
-    cy.get('[data-cy=modal-window]').should('exist');
-    cy.get('[data-cy=modal-window]').within(() => {
+    cy.get(SELECTORS.modalWindow).should('exist');
+    cy.get(SELECTORS.modalWindow).within(() => {
       //проверяем наличие заколовка модального окна
       cy.get('[data-cy=modal-title]').should('contain', 'Детали ингредиента');
       //проверяем отображение картинки ингредиента
@@ -75,22 +77,22 @@ describe('проверка работы модальных окон', function (
   it('закрытие модального окна ингредиента', function () {
     //клик по ингредиенту
     cy.get(
-      '[data-cy=ingredient-link][data-id="643d69a5c3f7b9001cfa093e"]'
+      `${SELECTORS.ingredientLink}[data-id="${INGREDIENT_IDS.filling}"]`
     ).click();
     //клик по кнопке закрытия модального окна
     cy.get('[data-cy=modal-close-button]').click();
     //проверка отсутствия оверлея
-    cy.get('[data-cy=overlay]').should('not.exist');
+    cy.get(SELECTORS.overlay).should('not.exist');
     //проверка отсутствия модального окна
-    cy.get('[data-cy=modal-window]').should('not.exist');
+    cy.get(SELECTORS.modalWindow).should('not.exist');
     //кликаем по ингредиенту
     cy.get(
-      '[data-cy=ingredient-link][data-id="643d69a5c3f7b9001cfa093e"]'
+      `${SELECTORS.ingredientLink}[data-id="${INGREDIENT_IDS.filling}"]`
     ).click();
     //кликаем по оверлею
-    cy.get('[data-cy=overlay]').click('topLeft', { force: true });
+    cy.get(SELECTORS.overlay).click('topLeft', { force: true });
     //проверяем наличие модального окна
-    cy.get('[data-cy=modal-window]').should('not.exist');
+    cy.get(SELECTORS.modalWindow).should('not.exist');
   });
 });
 
@@ -115,10 +117,10 @@ describe('проверка оформления заказа', function () {
       'postOrder'
     );
     //добавляем ингредиенты в корзину
-    cy.get('[data-cy=ingredient-card][data-id="643d69a5c3f7b9001cfa093d"]')
+    cy.get(`${SELECTORS.ingredientCard}[data-id="${INGREDIENT_IDS.bun}"]`)
       .contains('button', 'Добавить')
       .click();
-    cy.get('[data-cy=ingredient-card][data-id="643d69a5c3f7b9001cfa093e"]')
+    cy.get(`${SELECTORS.ingredientCard}[data-id="${INGREDIENT_IDS.filling}"]`)
       .contains('button', 'Добавить')
       .click();
   });
@@ -146,24 +148,24 @@ describe('проверка оформления заказа', function () {
   });
   it('проверка модального окна после успешного оформления заказа', function () {
     //оформляем заказ
-    cy.get('[data-cy=post-order-button]').click();
+    cy.get(SELECTORS.postOrderButton).click();
     //проверяем наличие оверлея
-    cy.get('[data-cy=overlay]').should('exist');
+    cy.get(SELECTORS.overlay).should('exist');
     //проверяем наличие модального окна
-    cy.get('[data-cy=modal-window]').should('exist');
-    cy.get('[data-cy=modal-window]').within(() => {
+    cy.get(SELECTORS.modalWindow).should('exist');
+    cy.get(SELECTORS.modalWindow).within(() => {
       cy.get('[data-cy=order-number]').should('have.text', '99962');
       cy.get('[data-cy=order-modal-image]').should('be.visible');
     });
   });
   it('проверка очистки конструктора после оформления заказа', function () {
     //оформляем заказ
-    cy.get('[data-cy=post-order-button]').click();
+    cy.get(SELECTORS.postOrderButton).click();
     //проверка очистки конструктора
-    cy.get('[data-cy=burger-constructor]')
+    cy.get(SELECTORS.burgerConstructor)
       .find('.constructor-element')
       .should('not.exist');
-    cy.get('[data-cy=total-price]').should('contain', '0');
+    cy.get(SELECTORS.totalPrice).should('contain', '0');
     cy.get('[data-cy=top-bun-container]').should('have.text', 'Выберите булки');
     cy.get('[data-cy=bottom-bun-container]').should(
       'have.text',
