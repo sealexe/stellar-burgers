@@ -16,7 +16,7 @@ interface ConstructorState {
   error: string | null;
 }
 
-const constructorInitialState: ConstructorState = {
+export const constructorInitialState: ConstructorState = {
   ingredients: [],
   bun: null,
   orderRequest: false,
@@ -116,3 +116,5 @@ export const {
   getOrderModalData,
   getOrderRequest
 } = constructorSlice.selectors;
+
+export default constructorSlice.reducer;

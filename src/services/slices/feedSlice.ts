@@ -18,7 +18,7 @@ interface FeedsState {
   error: string | null;
 }
 
-const feedsInitialState: FeedsState = {
+export const feedsInitialState: FeedsState = {
   orders: [],
   ordersAmount: {
     total: null,
@@ -59,3 +59,5 @@ export const feedsSlice = createSlice({
 
 export const { getAllOrders, getFeedsLoading, getFeedsError, getOrdersAmount } =
   feedsSlice.selectors;
+
+export default feedsSlice.reducer;

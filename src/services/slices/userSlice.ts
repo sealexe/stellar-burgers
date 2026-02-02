@@ -146,3 +146,4 @@ export const logout = createAsyncThunk('user/logoutUser', (_, { dispatch }) => {
 export const { setUser, setIsAuthChecked, userLogout, clearError } =
   userSlice.actions;
 export const { getUserData, getIsAuthChecked, getError } = userSlice.selectors;
+export default userSlice.reducer;

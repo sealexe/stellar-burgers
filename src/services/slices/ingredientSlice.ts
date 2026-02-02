@@ -12,7 +12,7 @@ interface IngredientsState {
   error: string | null;
 }
 
-const ingredientsInitialState: IngredientsState = {
+export const ingredientsInitialState: IngredientsState = {
   ingredients: [],
   isIngredientsLoading: false,
   error: null
@@ -47,3 +47,4 @@ export const ingredientsSlice = createSlice({
 
 export const { getAllIngredients, getIngredientsLoading, getImgredientsError } =
   ingredientsSlice.selectors;
+export default ingredientsSlice.reducer;
