@@ -13,7 +13,7 @@ interface OrderInfoState {
   error: string | null;
 }
 
-const orderInfoInitialState: OrderInfoState = {
+export const orderInfoInitialState: OrderInfoState = {
   order: {
     createdAt: '',
     ingredients: [],
@@ -59,3 +59,5 @@ export const {
   getIsOrderInfoLoading,
   getOrderInfoError
 } = orderInfoSlice.selectors;
+
+export default orderInfoSlice.reducer;
